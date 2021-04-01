@@ -1,0 +1,53 @@
+version: '3.4'
+
+networks:
+  booking_system:
+
+services:
+  booking_system_app:
+    build: .
+    container_name: booking_system_app
+    working_dir: /var/www/html/
+    command: "php artisan serve --host=0.0.0.0 --port=5000"
+    depends_on:
+      - booking_system_database
+    volumes:
+      - ./booking_system/:/var/www/html/
+      - /var/www/html/vendor
+    ports:
+      - "5000:5000"
+    stdin_open: true
+    tty: true
+    networks:
+      - booking_system
+  
+  booking_system_database:
+    image: mysql:latest
+    command:
+      - --innodb_buffer_pool_size=10M
+      - --innodb_use_native_aio=0
+    container_name: booking_system_database
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: booking_system
+    ports:
+      - "5001:3306"
+    networks:
+      - booking_system
+    restart: always
+    volumes:
+      - ./booking_system_database/:/var/lib/mysql
+
+  booking_system_phpmyadmin:
+    image: phpmyadmin:latest
+    restart: always
+    container_name: booking_system_phpmyadmin
+    depends_on:
+      - booking_system_database
+    ports:
+      - "5002:80"
+    environment:
+      PMA_HOST: booking_system_database
+      MYSQL_ROOT_PASSWORD: secret
+    networks:
+      - booking_system
