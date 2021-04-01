@@ -28,12 +28,10 @@ RUN apt-get clean
 # # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
-WORKDIR /var/www/html/
+# WORKDIR /var/www/html/
 
-RUN ls
+# COPY ./booking_system ./
 
-COPY ./booking_system ./
-
-RUN composer install
+# RUN composer install
 
 EXPOSE 5000

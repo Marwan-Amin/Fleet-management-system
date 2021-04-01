@@ -13,7 +13,6 @@ services:
       - booking_system_database
     volumes:
       - ./booking_system/:/var/www/html/
-      - /var/www/html/vendor
     ports:
       - "5000:5000"
     stdin_open: true

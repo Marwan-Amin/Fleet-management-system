@@ -12,6 +12,7 @@ docker volume prune -f
 
 #### START Builing docker containers -------------------------------
 
+cd booking_system && composer install && cd ..
 docker-compose up -d
 sudo chmod -R 777 booking_system_database/
 #### END Builing docker containers ---------------------------------
