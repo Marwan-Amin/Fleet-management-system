@@ -6,6 +6,7 @@ use App\Events\BusCreated;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BusRequest;
+use App\Http\Resources\Bus\BusCollection;
 use App\Models\Bus;
 
 class BusController extends Controller
@@ -38,7 +39,7 @@ class BusController extends Controller
     public function all(BusRequest $request)
     {
         $buses = Bus::paginate(10);
-        return $this->apiResponse->setSuccess("Success: All buses have been loaded successfully")->setData($buses)->returnJSON();
+        return $this->apiResponse->setSuccess("Success: All buses have been loaded successfully")->setData(($buses))->returnJSON();
     }
 
     public function delete(BusRequest $request)

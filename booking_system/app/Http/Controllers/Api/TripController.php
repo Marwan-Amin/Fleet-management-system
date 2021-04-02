@@ -22,12 +22,12 @@ class TripController extends Controller
         return $this->apiResponse->setSuccess("Success: A new trip has been created successfully")->setData($trip)->returnJSON();
     }
 
-    public function update(TripRequest $request)
-    {
-        $trip = Trip::find($request->validated()['trip_id']);
-        $trip->update($request->validated());
-        return $this->apiResponse->setSuccess("Success: This trip information has been updated successfully")->setData($trip)->returnJSON();
-    }
+    // public function update(TripRequest $request)
+    // {
+    //     $trip = Trip::find($request->validated()['trip_id']);
+    //     $trip->update($request->validated());
+    //     return $this->apiResponse->setSuccess("Success: This trip information has been updated successfully")->setData($trip)->returnJSON();
+    // }
 
     public function view(TripRequest $request)
     {
@@ -43,7 +43,7 @@ class TripController extends Controller
 
     public function delete(TripRequest $request)
     {
-        Trip::find($request->validated()['trip_id'])->delete();
+        $this->service->delete($request->trip_id);
         return $this->apiResponse->setSuccess("Success: This trip has been deleted successfully")->setData()->returnJSON();
     }
 }

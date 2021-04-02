@@ -10,7 +10,10 @@ class TripService
 {
     public function create($data)
     {
-        $available_seats = Bus::find($data['bus_id'])->available_seats;
+        $bus = Bus::find($data['bus_id']);
+        $bus->is_reserved = 1;
+        $bus->update();
+        $available_seats = $bus->available_seats;
         $data['starting_station_id'] = $data['stations'][0];
         $data['ending_station_id'] = end($data['stations']);
         $trip = Trip::create($data);
@@ -32,5 +35,14 @@ class TripService
         }
 
         return $trip;
+    }
+
+    public function delete($trip_id)
+    {
+        $trip = Trip::find($trip_id);
+        Bus::find($trip->bus_id)->update([
+            'is_reserved' => 0
+        ]);
+        $trip->delete();
     }
 }

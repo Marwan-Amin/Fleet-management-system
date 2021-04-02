@@ -16,4 +16,9 @@ class SmallTrip extends Model
         'available_seats',
         'trip_id'
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 }

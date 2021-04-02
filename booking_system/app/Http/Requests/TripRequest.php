@@ -30,7 +30,7 @@ class TripRequest extends FormRequest
             return [
                 'stations' => ['array', new DifferentStations()],
                 'stations.*' => ['required', 'integer', 'exists:stations,id'],
-                'bus_id' => 'required|integer|exists:buses,id',
+                'bus_id' => 'required|integer|exists:buses,id|unique:trips,bus_id',
                 'departure_time' => 'required|date',
                 'arrival_time' => 'required|date',
                 'is_booking_open' => 'required|boolean'

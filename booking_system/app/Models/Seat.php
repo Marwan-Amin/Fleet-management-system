@@ -13,4 +13,9 @@ class Seat extends Model
         'bus_id',
         'seat_number',
     ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
 }
