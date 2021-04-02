@@ -29,7 +29,7 @@ class AuthRequest extends FormRequest
         if ($this->path() == 'api/register') {
             return [
                 'name' => 'required|string',
-                'email' => 'required|string|unique:users',
+                'email' => 'required|string|email|unique:users',
                 'password' => 'required|string|confirmed|min:8'
             ];
         }
