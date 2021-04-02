@@ -31,20 +31,19 @@ class ApiResponse
     public function setData($data = null): object
     {
         $this->body['data'] = $data;
-        $this->body['user'] = auth()->user();
         return $this;
     }
 
     public function setError($error): object
     {
-        $this->body['status'] = false;
+        $this->body['status'] = 400;
         $this->body['message'] = $error;
         return $this;
     }
 
     public function setSuccess($message): object
     {
-        $this->body['status'] = true;
+        $this->body['status'] = 200;
         $this->body['message'] = $message;
         return $this;
     }
