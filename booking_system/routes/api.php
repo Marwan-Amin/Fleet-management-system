@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BusController;
+use App\Http\Controllers\Api\CustomerTripController;
 use App\Http\Controllers\Api\StationController;
 use App\Http\Controllers\Api\TripController;
 use Illuminate\Support\Facades\Route;
@@ -42,7 +43,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/trips', [TripController::class, 'all']);
     Route::delete('/trip/delete', [TripController::class, 'delete']);
 
-
+    // Booking trips
+    Route::get('/available-trips', [CustomerTripController::class, 'all']);
 
 
     Route::post('logout', [AuthController::class, 'logout']);

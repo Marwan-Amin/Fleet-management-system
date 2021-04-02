@@ -22,18 +22,22 @@ class Trip extends Model
     protected $hidden = [
         'created_at',
         'updated_at',
-        'bus_id'
+        'bus_id',
+        'starting_station_id',
+        'ending_station_id',
     ];
 
     protected $with = [
+        'starting_station',
+        'ending_station',
         'bus',
-        'smallTrips'
+        'smallTrips',
     ];
 
     protected $casts = [
         'is_booking_open' => 'boolean'
     ];
-    
+
     public function bus()
     {
         return $this->belongsTo(Bus::class);
@@ -44,8 +48,13 @@ class Trip extends Model
         return $this->hasMany(SmallTrip::class);
     }
 
-    public function station()
+    public function starting_station()
     {
-        return $this->belongsTo(Station::class);
+        return $this->belongsTo(Station::class, 'starting_station_id');
+    }
+
+    public function ending_station()
+    {
+        return $this->belongsTo(Station::class, 'ending_station_id');
     }
 }
