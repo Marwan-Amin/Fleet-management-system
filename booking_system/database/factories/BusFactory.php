@@ -22,8 +22,8 @@ class BusFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "Bus " . $this->faker->numberBetween(0, 100),
-            'available_seats' => $this->faker->numberBetween(12, 50)
+            'name' => "Bus " . $this->faker->unique()->numberBetween(12,50),
+            'available_seats' => '12'
         ];
     }
 }

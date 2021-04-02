@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\BusCreated;
 use App\Helpers\ApiResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BusRequest;
@@ -17,6 +18,7 @@ class BusController extends Controller
     public function create(BusRequest $request)
     {
         $bus = Bus::create($request->validated());
+        event(new BusCreated($bus));
         return $this->apiResponse->setSuccess("Success: A new bus has been created successfully")->setData($bus)->returnJSON();
     }
 
