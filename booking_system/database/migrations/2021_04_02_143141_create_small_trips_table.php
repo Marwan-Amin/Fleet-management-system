@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateTripsTable extends Migration
+class CreateSmallTripsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class CreateTripsTable extends Migration
      */
     public function up()
     {
-        Schema::create('trips', function (Blueprint $table) {
+        Schema::create('small_trips', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('trip_id')->constrained('trips')->onDelete('cascade');
             $table->foreignId('starting_station_id')->constrained('stations')->onDelete('cascade');
             $table->foreignId('ending_station_id')->constrained('stations')->onDelete('cascade');
-            $table->foreignId('bus_id')->constrained('buses')->onDelete('cascade');
-            $table->dateTime('departure_time');
-            $table->dateTime('arrival_time');
+            $table->integer('available_seats');
             $table->tinyInteger('is_booking_open')->default(1);
             $table->timestamps();
         });
@@ -32,6 +31,6 @@ class CreateTripsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('trips');
+        Schema::dropIfExists('small_trips');
     }
 }

@@ -35,7 +35,7 @@ class BusController extends Controller
 
     public function all(BusRequest $request)
     {
-        $buses = Bus::all();
+        $buses = Bus::paginate(10);
         return $this->apiResponse->setSuccess("Success: All buses have been loaded successfully")->setData($buses)->returnJSON();
     }
 

@@ -35,7 +35,7 @@ class StationController extends Controller
 
     public function all(StationRequest $request)
     {
-        $stations = Station::all();
+        $stations = Station::paginate(10);
         return $this->apiResponse->setSuccess("Success: All stations have been loaded successfully")->setData($stations)->returnJSON();
     }
 

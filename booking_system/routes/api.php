@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\BusController;
 use App\Http\Controllers\Api\StationController;
+use App\Http\Controllers\Api\TripController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,6 +34,13 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::get('/station', [StationController::class, 'view']);
     Route::get('/stations', [StationController::class, 'all']);
     Route::delete('/station/delete', [StationController::class, 'delete']);
+
+    // Trip feature
+    Route::post('/trip', [TripController::class, 'create']);
+    Route::post('/trip/update', [TripController::class, 'update']);
+    Route::get('/trip', [TripController::class, 'view']);
+    Route::get('/trips', [TripController::class, 'all']);
+    Route::delete('/trip/delete', [TripController::class, 'delete']);
 
 
 
