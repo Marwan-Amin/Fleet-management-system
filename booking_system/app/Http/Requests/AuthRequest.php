@@ -2,7 +2,9 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Role;
 use App\Rules\ValidatePasswordWithEmail;
+use Illuminate\Validation\Rule;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
@@ -36,7 +38,9 @@ class AuthRequest extends FormRequest
 
         if ($this->path() == 'api/login') {
             return [
-                'email' => 'required|string|exists:users',
+                'email' => ['required', 'string', Rule::exists('users', 'email')->where(function ($query) {
+                    return $query->where('role_id', Role::CUSTOMER_ROLE_ID);
+                })],
                 'password' => ['required', 'string', new ValidatePasswordWithEmail($this->email)]
             ];
         }

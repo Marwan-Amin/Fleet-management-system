@@ -4,13 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AuthRequest;
+use App\Models\Role;
 use App\Models\User;
 
 class AuthController extends Controller
 {
     public function register(AuthRequest $request)
     {
-        $user = User::create($request->validated());
+        $data = $request->validated();
+        $data['role_id'] = Role::CUSTOMER_ROLE_ID;
+        $user = User::create($data);
         $token = $user->createToken('token')->plainTextToken;
         return response()->json([
             'user'  => $user,
