@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Auth;
 
 use App\Models\Role;
+use App\Rules\ValidatePasswordWithEmail;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class LoginRequest extends FormRequest
             'email' => ['required', 'string', Rule::exists('users', 'email')->where(function ($query) {
                 return $query->where('role_id', Role::ADMIN_ROLE_ID);
             })],
-            'password' => 'required|string',
+            'password' => ['required', 'string', new ValidatePasswordWithEmail($this->email)]
         ];
     }
 
