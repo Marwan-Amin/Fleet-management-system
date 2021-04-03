@@ -33,6 +33,10 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'created_at',
+        'updated_at',
+        'email_verified_at',
+        'role_id'
     ];
 
     /**
@@ -44,6 +48,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    protected $with = [
+        'role'
+    ];
+
     public function isAdmin()
     {
         return $this->role_id == Role::ADMIN_ROLE_ID;
@@ -52,5 +60,10 @@ class User extends Authenticatable
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
     }
 }
