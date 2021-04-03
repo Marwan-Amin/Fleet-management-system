@@ -7,12 +7,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerTripRequest;
 use App\Models\SmallTrip;
 use App\Models\Trip;
-use Carbon\Carbon;
+use App\Services\TripService;
 
 class CustomerTripController extends Controller
 {
-    public function __construct(ApiResponse $apiResponse)
+    public function __construct(ApiResponse $apiResponse, TripService $tripService)
     {
+        $this->service = $tripService;
         $this->apiResponse = $apiResponse;
     }
 
@@ -27,7 +28,15 @@ class CustomerTripController extends Controller
         return $this->apiResponse->setSuccess("Success: All available trips have been loaded successfully")->setData($trips)->returnJSON();
     }
 
+    public function bookSmallTrip(CustomerTripRequest $request)
+    {
+        $this->service->bookSmallTrip($request->validated());
+        return $this->apiResponse->setSuccess("Success: You have booked this trip successfully")->setData()->returnJSON();
+    }
+
     public function book(CustomerTripRequest $request)
     {
+        $this->service->book($request->validated());
+        return $this->apiResponse->setSuccess("Success: You have booked this trip successfully")->setData()->returnJSON();
     }
 }

@@ -55,4 +55,39 @@ class TripService
         ]);
         $trip->delete();
     }
+
+    public function bookSmallTrip($data)
+    {
+        foreach ($data['trip_seats'] as $seat_id) {
+            TripSeat::find($seat_id)->update([
+                'user_id' => auth()->user()->id,
+                'is_reserved' => 1
+            ]);
+        }
+        $smallTrip = SmallTrip::find($data['small_trip_id']);
+        $smallTrip->available_seats = $smallTrip->available_seats - count($data['trip_seats']);
+        $smallTrip->update();
+    }
+
+    public function book($data)
+    {
+        $smallTrips = SmallTrip::where(function ($query) use ($data) {
+            $query->where('trip_id', $data['trip_id']);
+        })->Where(function ($query) use ($data) {
+            $query->where('starting_station_id', $data['starting_station_id'])
+                ->orwhere('ending_station_id', $data['ending_station_id']);
+        })->get();
+
+        foreach ($smallTrips as $smallTrip) {
+            foreach ($data['trip_seats'] as $seat_id) {
+                $tripSeat = TripSeat::where('small_trip_id', $smallTrip->id)->where('seat_id', $seat_id)->update([
+                    'user_id' => auth()->user()->id,
+                    'is_reserved' => 1,
+                ]);
+            }
+            $smallTrip->update([
+                'available_seats' => $smallTrip->available_seats - count($data['trip_seats'])
+            ]);
+        }
+    }
 }

@@ -24,4 +24,9 @@ class TripSeat extends Model
     protected $casts = [
         'is_reserved' => 'boolean'
     ];
+
+    public function isReserved()
+    {
+        return $this->is_reserved;
+    }
 }

@@ -45,6 +45,8 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
 
     // Booking trips
     Route::get('/available-trips', [CustomerTripController::class, 'all']);
+    Route::post('/trip/book-small-trip', [CustomerTripController::class, 'bookSmallTrip']);
+    Route::post('/trip/book', [CustomerTripController::class, 'book']);
 
 
     Route::post('logout', [AuthController::class, 'logout']);
