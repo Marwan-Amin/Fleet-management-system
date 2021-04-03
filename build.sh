@@ -29,8 +29,8 @@ docker exec -it booking_system_app cp .env.example .env
 docker exec -it booking_system_app composer dump-autoload
 docker exec -it booking_system_app php artisan key:generate
 docker exec -it booking_system_app php artisan migrate:fresh --seed
-# docker exec -it booking_system_app php artisan config:cache
-# docker exec -it booking_system_app php artisan route:cache
+docker exec -it booking_system_app php artisan config:cache
+docker exec -it booking_system_app php artisan route:cache
 #### END Configuring (booking_system_app) microservice ----------------------
 
 end=`date +%s`
