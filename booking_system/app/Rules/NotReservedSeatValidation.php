@@ -29,9 +29,12 @@ class NotReservedSeatValidation implements Rule
     {
         if ($this->request->path() == 'api/trip/book-small-trip') {
             $seat = TripSeat::find($value);
+            if (!$seat) {
+                return false;
+            }
             return !$seat->isReserved();
         }
-        
+
         if ($this->request->path() == 'api/trip/book') {
             $smallTrips = SmallTrip::where(function ($query) {
                 $query->where('trip_id', $this->request->trip_id);

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TripRequest;
 use App\Models\Trip;
 use App\Services\TripService;
+use Exception;
+use Illuminate\Support\Facades\DB;
 
 class TripController extends Controller
 {
@@ -18,7 +20,14 @@ class TripController extends Controller
 
     public function create(TripRequest $request)
     {
-        $trip = $this->service->create($request->validated());
+        DB::beginTransaction();
+        try {
+            $trip = $this->service->create($request->validated());
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            return $this->apiResponse->setError($e->message)->setData()->returnJSON();
+        }
         return $this->apiResponse->setSuccess("Success: A new trip has been created successfully")->setData($trip)->returnJSON();
     }
 

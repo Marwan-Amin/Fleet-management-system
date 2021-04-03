@@ -39,7 +39,7 @@ class TripService
             foreach ($seats as $seat) {
                 TripSeat::create([
                     'seat_id' => $seat->id,
-                    'trip_id' => $newSmallTrip->id,
+                    'small_trip_id' => $newSmallTrip->id,
                 ]);
             }
         }

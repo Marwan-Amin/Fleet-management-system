@@ -38,9 +38,7 @@ class AuthRequest extends FormRequest
 
         if ($this->path() == 'api/login') {
             return [
-                'email' => ['required', 'string', Rule::exists('users', 'email')->where(function ($query) {
-                    return $query->where('role_id', Role::CUSTOMER_ROLE_ID);
-                })],
+                'email' => ['required', 'string', 'email', 'exists:users,email'],
                 'password' => ['required', 'string', new ValidatePasswordWithEmail($this->email)]
             ];
         }

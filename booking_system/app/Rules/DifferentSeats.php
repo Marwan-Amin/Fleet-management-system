@@ -25,7 +25,7 @@ class DifferentSeats implements Rule
      */
     public function passes($attribute, $value)
     {
-        if (count($value) != count(array_unique($value)) || count(array_unique($value)) <= 1) {
+        if (count($value) != count(array_unique($value)) || count(array_unique($value)) < 1) {
             return false;
         }
         return true;
