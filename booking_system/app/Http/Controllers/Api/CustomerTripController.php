@@ -7,7 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CustomerTripRequest;
 use App\Models\SmallTrip;
 use App\Models\Trip;
-use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class CustomerTripController extends Controller
 {

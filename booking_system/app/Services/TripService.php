@@ -3,8 +3,10 @@
 namespace App\Services;
 
 use App\Models\Bus;
+use App\Models\Seat;
 use App\Models\SmallTrip;
 use App\Models\Trip;
+use App\Models\TripSeat;
 
 class TripService
 {
@@ -26,12 +28,20 @@ class TripService
         }
 
         foreach ($small_trips as $small_trip) {
-            SmallTrip::create([
+            $newSmallTrip = SmallTrip::create([
                 'starting_station_id' => $small_trip[0],
                 'ending_station_id' => $small_trip[1],
                 'available_seats' => $available_seats,
                 'trip_id' => $trip->id
             ]);
+
+            $seats = Seat::where('bus_id', $data['bus_id'])->get();
+            foreach ($seats as $seat) {
+                TripSeat::create([
+                    'seat_id' => $seat->id,
+                    'trip_id' => $newSmallTrip->id,
+                ]);
+            }
         }
 
         return $trip;
