@@ -22,27 +22,28 @@ Route::post('register', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
-    // Bus feature
-    Route::post('/bus', [BusController::class, 'create']);
-    Route::post('/bus/update', [BusController::class, 'update']);
-    Route::get('/bus', [BusController::class, 'view']);
-    Route::get('/buses', [BusController::class, 'all']);
-    Route::delete('/bus/delete', [BusController::class, 'delete']);
+    Route::group(['middleware' => ['admin']], function () {
+        // Bus feature
+        Route::post('/bus', [BusController::class, 'create']);
+        Route::post('/bus/update', [BusController::class, 'update']);
+        Route::get('/bus', [BusController::class, 'view']);
+        Route::get('/buses', [BusController::class, 'all']);
+        Route::delete('/bus/delete', [BusController::class, 'delete']);
 
-    // Station feature
-    Route::post('/station', [StationController::class, 'create']);
-    Route::post('/station/update', [StationController::class, 'update']);
-    Route::get('/station', [StationController::class, 'view']);
-    Route::get('/stations', [StationController::class, 'all']);
-    Route::delete('/station/delete', [StationController::class, 'delete']);
+        // Station feature
+        Route::post('/station', [StationController::class, 'create']);
+        Route::post('/station/update', [StationController::class, 'update']);
+        Route::get('/station', [StationController::class, 'view']);
+        Route::get('/stations', [StationController::class, 'all']);
+        Route::delete('/station/delete', [StationController::class, 'delete']);
 
-    // Trip feature
-    Route::post('/trip', [TripController::class, 'create']);
-    Route::post('/trip/update', [TripController::class, 'update']);
-    Route::get('/trip', [TripController::class, 'view']);
-    Route::get('/trips', [TripController::class, 'all']);
-    Route::delete('/trip/delete', [TripController::class, 'delete']);
-
+        // Trip feature
+        Route::post('/trip', [TripController::class, 'create']);
+        Route::post('/trip/update', [TripController::class, 'update']);
+        Route::get('/trip', [TripController::class, 'view']);
+        Route::get('/trips', [TripController::class, 'all']);
+        Route::delete('/trip/delete', [TripController::class, 'delete']);
+    });
     // Booking trips
     Route::get('/available-trips', [CustomerTripController::class, 'all']);
     Route::post('/trip/book-small-trip', [CustomerTripController::class, 'bookSmallTrip']);
