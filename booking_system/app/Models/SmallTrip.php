@@ -19,6 +19,33 @@ class SmallTrip extends Model
 
     protected $hidden = [
         'created_at',
-        'updated_at'
+        'updated_at',
+        'starting_station_id',
+        'ending_station_id',
     ];
+
+    protected $with = [
+        'starting_station',
+        'ending_station',
+        'seats',
+    ];
+
+    protected $casts = [
+        'is_booking_open' => 'boolean'
+    ];
+
+    public function starting_station()
+    {
+        return $this->belongsTo(Station::class, 'starting_station_id');
+    }
+
+    public function ending_station()
+    {
+        return $this->belongsTo(Station::class, 'ending_station_id');
+    }
+
+    public function seats()
+    {
+        return $this->hasMany(TripSeat::class);
+    }
 }

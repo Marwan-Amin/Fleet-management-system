@@ -11,8 +11,17 @@ class TripSeat extends Model
 
     protected $fillable = [
         'seat_id',
-        'trip_id',
+        'small_trip_id',
         'user_id',
         'is_reserved'
+    ];
+
+    protected $hidden = [
+        'created_at',
+        'updated_at'
+    ];
+
+    protected $casts = [
+        'is_reserved' => 'boolean'
     ];
 }

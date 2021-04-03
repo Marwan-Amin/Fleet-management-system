@@ -16,7 +16,7 @@ class CreateTripSeatsTable extends Migration
         Schema::create('trip_seats', function (Blueprint $table) {
             $table->id();
             $table->foreignId('seat_id')->constrained('seats')->onDelete('cascade');
-            $table->foreignId('trip_id')->constrained('small_trips')->onDelete('cascade');
+            $table->foreignId('small_trip_id')->constrained('small_trips')->onDelete('cascade');
             $table->foreignId('user_id')->nullable();
             $table->tinyInteger('is_reserved')->default(0);
             $table->timestamps();
